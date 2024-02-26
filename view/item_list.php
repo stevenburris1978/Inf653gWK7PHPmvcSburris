@@ -2,7 +2,7 @@
 
 <section>
     <header>
-        <h1>Todo Items</h1>
+        <h1>Things To Do Items</h1>
     </header>
 
     <!-- Form for adding a new item -->

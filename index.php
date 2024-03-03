@@ -70,7 +70,19 @@ switch ($action) {
             include('view/error.php');
             exit(); 
         }
-        break; 
+        break;
+    case "edit_item_form":
+        $item_id = filter_input(INPUT_POST, 'item_id', FILTER_VALIDATE_INT);
+        if ($item_id) {
+            $item = get_item($item_id);
+            include('view/edit_item_form.php');
+        } else {
+            $error = "Missing or incorrect item id.";
+            include('view/error.php');
+            exit(); 
+        }
+        break;
+         
     default:
         $categories = get_categories();
         $todoitems = get_todoitems_by_category($category_id);

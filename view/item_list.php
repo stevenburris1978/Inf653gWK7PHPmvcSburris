@@ -4,7 +4,7 @@ include('view/header.php');
 
 <!-- Section to Display Itemss -->
 <section>
-    <h1>Items</h1>
+    <h1>Categories With Items</h1>
     <!-- Form for Filtering Items by Category -->
     <form action="." method="get">
         <select name="category_id">
@@ -33,6 +33,12 @@ include('view/header.php');
                     <input type="hidden" name="item_id" value="<?= $item['ItemNum'] ?>">
                     <button type="submit">Remove</button> <!-- Button to delete the item -->
                 </form>
+                <!-- Form to edit the item -->
+                <form action="." method="post" style="display: inline;">
+                    <input type="hidden" name="action" value="edit_item_form">
+                    <input type="hidden" name="item_id" value="<?= $item['ItemNum'] ?>">
+                    <button type="submit">Edit</button>
+                </form>
             </div>
         <?php endforeach; ?>
     <?php else : ?>
@@ -43,7 +49,7 @@ include('view/header.php');
 
 <!-- Section to Add a New Item -->
 <section>
-    <h2>Add Item</h2>
+    <h2>Add Item To Category</h2>
     <form action="." method="post">
         <select name="category_id" required>
             <option value="">Please select</option>
@@ -63,7 +69,7 @@ include('view/header.php');
 </section>
 
 <!-- Link to View/Edit categories page -->
-<p><a href=".?action=list_categories">View/Edit Categories</a></p>
+<p><a href=".?action=list_categories">View/Add Categories</a></p>
 
 <?php 
 include('view/footer.php'); 

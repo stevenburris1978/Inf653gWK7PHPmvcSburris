@@ -82,6 +82,22 @@ switch ($action) {
             exit(); 
         }
         break;
+        case "edit_item":
+            $item_number = filter_input(INPUT_POST, 'item_number', FILTER_VALIDATE_INT);
+            $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
+            $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS);
+        
+            if ($item_number && !empty($title) && !empty($description)) {
+                update_item($item_number, $title, $description);
+                header("Location: .?action=list_todoitems&category_id=" . $category_id);
+                exit();
+            } else {
+                $error = "Invalid item data. Check all fields and try again.";
+                include('view/error.php');
+                exit(); 
+            }
+            break;
+        
          
     default:
         $categories = get_categories();

@@ -1,13 +1,23 @@
 <?php
-function get_items()
+function get_todoitems_by_category($category_id)
 {
     global $db;
-    $query = 'SELECT * FROM todoitems ORDER BY ItemNum';
+    if ($category_id) {
+        $query = 'SELECT A.ItemNum, A.Title, A.Description, C.categoryName From todoitems A
+            LEFT JOIN categories C ON A.categoryID = C.categoryID
+                WHERE A.categoryID = :categoryID ORDER BY A.ItemNum';
+    } else {
+        $query = 'SELECT A.ItemNum, A.Title, A.Description, C.categoryName From todoitems A
+        LEFT JOIN categories C ON A.categoryID = C.categoryID ORDER BY C.categoryID';
+    }
     $statement = $db->prepare($query);
+    if ($category_id) {
+        $statement->bindValue(':categoryID', $category_id);
+    }
     $statement->execute();
-    $items = $statement->fetchAll();
+    $todoitems = $statement->fetchAll();
     $statement->closeCursor();
-    return $items;
+    return $todoitems;
 }
 
 function delete_item($item_number)
@@ -20,11 +30,25 @@ function delete_item($item_number)
     $statement->closeCursor();
 }
 
-function add_item($title, $description)
-{
+function add_item($category_id, $title, $description) {
     global $db;
-    $query = 'INSERT INTO todoitems (Title, Description) VALUES (:title, :description)';
+    
+    // First, check if the categoryID exists in the categories table
+    $query = 'SELECT COUNT(*) FROM categories WHERE categoryID = :category_id';
     $statement = $db->prepare($query);
+    $statement->bindValue(':category_id', $category_id);
+    $statement->execute();
+    $exists = $statement->fetchColumn() > 0;
+    $statement->closeCursor();
+
+    if (!$exists) {
+        throw new Exception("Category ID: $category_id does not exist in categories table.");
+    }
+
+    // If categoryID exists, proceed to insert the new item
+    $query = 'INSERT INTO todoitems (categoryID, Title, Description) VALUES (:category_id, :title, :description)';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':category_id', $category_id);
     $statement->bindValue(':title', $title);
     $statement->bindValue(':description', $description);
     $statement->execute();

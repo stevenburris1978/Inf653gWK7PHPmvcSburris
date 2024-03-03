@@ -33,7 +33,7 @@ function delete_item($item_number)
 function add_item($category_id, $title, $description) {
     global $db;
     
-    // First, check if the categoryID exists in the categories table
+    // check if the categoryID exists in the categories table
     $query = 'SELECT COUNT(*) FROM categories WHERE categoryID = :category_id';
     $statement = $db->prepare($query);
     $statement->bindValue(':category_id', $category_id);
@@ -45,7 +45,7 @@ function add_item($category_id, $title, $description) {
         throw new Exception("Category ID: $category_id does not exist in categories table.");
     }
 
-    // If categoryID exists, proceed to insert the new item
+    // If categoryID exists insert the new item
     $query = 'INSERT INTO todoitems (categoryID, Title, Description) VALUES (:category_id, :title, :description)';
     $statement = $db->prepare($query);
     $statement->bindValue(':category_id', $category_id);

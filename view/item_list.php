@@ -21,7 +21,6 @@ include('view/header.php');
 
     <!-- Check if there are categories to display -->
     <?php if (!empty($todoitems)) : ?>
-        <!-- Loop through each item and display it -->
         <?php foreach ($todoitems as $item) : ?>
             <div class="bordered">
                 <p><strong>CATEGORY:</strong></p>
@@ -34,7 +33,7 @@ include('view/header.php');
                     <form action="." method="post">
                         <input type="hidden" name="action" value="delete_item">
                         <input type="hidden" name="item_id" value="<?= $item['ItemNum'] ?>">
-                        <button type="submit">Remove</button> <!-- Button to delete the item -->
+                        <button type="submit">Remove</button> 
                     </form>
                     <!-- Form to edit the item -->
                     <form action="." method="post" style="display: inline;">
@@ -46,7 +45,6 @@ include('view/header.php');
             </div>
         <?php endforeach; ?>
     <?php else : ?>
-        <!-- Message displayed if no itemss exist -->
         <p>No items exist<?= $category_id ? ' for this category' : '' ?> !</p>
     <?php endif; ?>
 </section>
@@ -59,7 +57,7 @@ include('view/header.php');
             <select name="category_id" required>
                 <option value="">Category</option>
                 <?php foreach ($categories as $category) : ?>
-                    <!-- Options for selecting category, populated dynamically -->
+                    <!-- Options for selecting category -->
                     <option value="<?= $category['categoryID'] ?>">
                         <?= htmlspecialchars($category['categoryName']); ?>
                     </option>
@@ -69,12 +67,11 @@ include('view/header.php');
             <input type="text" name="title" maxlength="120" placeholder="Title" required>
             <!-- Input field for the item description -->
             <input type="text" name="description" maxlength="120" placeholder="Description" required>
-            <button type="submit" name="action" value="add_item">Add</button> <!-- Submit button for adding the item -->
+            <button type="submit" name="action" value="add_item">Add</button> 
         </form>
     </div>
 </section>
 
-<!-- Link to View/Edit categories page -->
 <p><a href=".?action=list_categories">View/Edit Categories</a></p>
 
 <?php 

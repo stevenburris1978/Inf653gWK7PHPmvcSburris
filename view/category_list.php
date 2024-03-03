@@ -4,7 +4,7 @@ include("view/header.php");
 ?>
 
 <!-- Display Categories -->
-<?php if (!empty($categories)) : ?> <!-- Check if there are any categories to display -->
+<?php if (!empty($categories)) : ?> 
     <section id="list" class="list">
         <header>
             <h1>Categories List</h1>
@@ -30,7 +30,6 @@ include("view/header.php");
         <?php endforeach; ?>
     </section>
 <?php else : ?>
-    <!-- Display a message if no categories exist -->
     <p>No Categories exist!</p>
 <?php endif; ?>
 
